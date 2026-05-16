@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary, Di & Jiju!</title>
+    <style>
+        /* Modern Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffeaa7 0%, #ff7675 100%);
+            color: #2d3436;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Hero Header Section */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #f5f6fa;
+            font-style: italic;
+        }
+
+        /* Message Board */
+        .message-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease-out;
+        }
+
+        .message-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #4b4b4b;
+        }
+
+        /* Polaroid Photo Gallery */
+        .gallery-title {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 1px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 25px 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+            width: 280px;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border: 1px solid #f1f2f6;
+        }
+
+        .polaroid .caption {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Interactive Surprise Section */
+        .surprise-section {
+            margin: 50px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .surprise-btn {
+            background-color: #fdcb6e;
+            color: #2d3436;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .surprise-btn:hover {
+            transform: scale(1.1);
+            background-color: #ffeaa7;
+        }
+
+        .surprise-btn:active {
+            transform: scale(0.95);
+        }
+
+        .surprise-content {
+            display: none;
+            margin-top: 30px;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Responsive Wrapper for Embedded Google Drive Player */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            max-width: 650px;
+            width: 90%;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 5px solid white;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Header Section -->
+    <header>
+        <h1>🎉 Happy Anniversary! 🎉</h1>
+        <p>To the most beautiful couple in the world</p>
+    </header>
+
+    <!-- Personalized Message -->
+    <div class="message-card">
+        <blockquote>
+            <p><strong>Dear AKANKSHA & ARVIND,</strong></p>
+            <br>
+            <p>Wishing you both a lifetime of love, laughter, and endless happiness together. Thank you for showing everyone what a perfect partnership looks like. May your bond grow stronger with each passing year!</p>
+            <br>
+            <p>With love always, <br><strong>Abhishaik</strong> ❤️</p>
+        </blockquote>
+    </div>
+
+    <!-- Photo Gallery -->
+    <h2 class="gallery-title">Memories Shared 📸</h2>
+    <div class="gallery-container">
+        
+        <!-- Photo 1 -->
+        <div class="polaroid">
+            <img src="AKANKSA1.JPEG" alt="Wedding Memory">
+            <div class="caption">The Perfect Day ✨</div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="polaroid">
+            <img src="AKANKSA3.JPEG" alt="Happy Times">
+            <div class="caption">Smiles & Sunshine ☀️</div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="polaroid">
+            <img src="AKANKSA4.JPEG" alt="Beautiful Couple">
+            <div class="caption">Forever to Go ♾️</div>
+        </div>
+
+    </div>
+
+    <!-- Interactive Surprise Area (Google Drive Embedded Player) -->
+    <div class="surprise-section">
+        <button class="surprise-btn" id="gift-btn" onclick="revealSurprise()">Click for a Surprise! 🎁</button>
+        
+        <div class="surprise-content" id="surprise-box">
+            <div class="video-wrapper">
+                <!-- Google Drive Embedded Preview Link -->
+                <iframe 
+                    src="https://drive.google.com/file/d/1DkfCQ1BuZSabPGknfLaYNjeFf_vTS1uL/preview" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <h2 style="color: white; margin-top: 25px; text-shadow: 1px 1px 5px rgba(0,0,0,0.3);">Cheers to Another Year! 🥂</h2>
+        </div>
+    </div>
+
+    <footer>
+        Made with ❤️ for a special sister
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function revealSurprise() {
+            const surpriseBox = document.getElementById('surprise-box');
+            
+            // Show the hidden video section
+            surpriseBox.style.display = 'block';
+            
+            // Trigger Confetti Effect
+            startConfetti();
+            
+            // Smoothly scroll down to focus on the video element
+            setTimeout(() => {
+                surpriseBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        // Confetti Engine
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let pieces = [];
+        let numberOfPieces = 150;
+        let lastUpdateTime = Date.now();
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createPiece() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                rotation: Math.random() * 360,
+                rotationSpeed: Math.random() * 10 - 5,
+                color: ['#ff6b6b', '#ffb8b8', '#ffdf80', '#ffffff', '#81ecec'][Math.floor(Math.random() * 5)],
+                width: Math.random() * 8 + 4,
+                height: Math.random() * 15 + 5,
+                speed: Math.random() * 3 + 2
+            };
+        }
+
+        function updatePieces() {
+            let now = Date.now();
+            let dt = (now - lastUpdateTime) / 16;
+            lastUpdateTime = now;
+
+            for (let i = 0; i < pieces.length; i++) {
+                let p = pieces[i];
+                p.y += p.speed * dt;
+                p.rotation += p.rotationSpeed * dt;
+
+                if (p.y > canvas.height) {
+                    pieces[i] = createPiece();
+                }
+            }
+        }
+
+        function drawPieces() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < pieces.length; i++) {
+                let p = pieces[i];
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.width / 2, -p.height / 2, p.width, p.height);
+                ctx.restore();
+            }
+        }
+
+        function animate() {
+            updatePieces();
+            drawPieces();
+            requestAnimationFrame(animate);
+        }
+
+        function startConfetti() {
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            pieces = [];
+            for (let i = 0; i < numberOfPieces; i++) {
+                pieces.push(createPiece());
+            }
+            animate();
+            
+            // Clean up rain after 7 seconds to keep page light
+            setTimeout(() => {
+                pieces = [];
+            }, 7000);
+        }
+    </script>
+</body>
+</html>
